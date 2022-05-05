@@ -1,27 +1,3 @@
-module Lib
-    ( someFunc,
-    cocaCola,
-    nombreDelProducto,
-    precio,
-    productoCodiciado,
-    largoNombreDelProducto,
-    productoCorriente,
-    inicialNombreProducto,
-    esVocal,
-    productoXL,
-    aplicarCostoDeEnvio,
-    productoDeLujo,
-    aplicarDescuento,
-    aplicarDescuentoEnCantidad,
-    precioTotal,
-    entregaSencilla,
-    descodiciarProducto,
-    versionBarata
-    ) where
-
-someFunc :: IO ()
-someFunc = putStrLn "someFunc"
-
 type Producto = (String, Float)
 
 cocaCola :: Producto
@@ -34,7 +10,7 @@ precio :: Producto -> Float
 precio (_, unPrecio) = unPrecio
 
 productoCodiciado :: Producto -> Bool
-productoCodiciado unProducto = largoNombreDelProducto unProducto > 10
+productoCodiciado unProducto = (>10) . largoNombreDelProducto $ unProducto
 
 largoNombreDelProducto :: Producto -> Int
 largoNombreDelProducto unProducto = length . nombreDelProducto $ unProducto
@@ -49,13 +25,13 @@ esVocal :: Char -> Bool
 esVocal unCaracter = elem unCaracter "aeiouAEIOU"
 
 productoXL :: Producto -> String
-productoXL unProducto = nombreDelProducto unProducto ++ "XL"
+productoXL unProducto = (++ "XL") . nombreDelProducto $ unProducto
 
 aplicarCostoDeEnvio :: Producto -> Float -> Float
 aplicarCostoDeEnvio unProducto costoDeEnvio = precio unProducto + costoDeEnvio
 
 productoDeLujo :: Producto -> Bool
-productoDeLujo unProducto = 'x' `elem` nombreDelProducto unProducto || 'z' `elem` nombreDelProducto unProducto
+productoDeLujo unProducto = ((elem 'x') . nombreDelProducto  $ unProducto) || ((elem 'z') . nombreDelProducto $ unProducto)
 
 aplicarDescuento :: Producto -> Float -> Float
 aplicarDescuento unProducto descuento = precio unProducto - descuento
@@ -77,7 +53,3 @@ descodiciarProducto unProducto = (take 10) . nombreDelProducto $ unProducto
 
 versionBarata :: Producto -> String
 versionBarata unProducto = reverse . descodiciarProducto $ unProducto
-
-
-
-
